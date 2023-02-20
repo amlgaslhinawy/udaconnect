@@ -1,3 +1,4 @@
+
 insert into public.person (id, first_name, last_name, company_name) values (5, 'Taco', 'Fargo', 'Alpha Omega Upholstery');
 insert into public.person (id, first_name, last_name, company_name) values (6, 'Frank', 'Shader', 'USDA');
 insert into public.person (id, first_name, last_name, company_name) values (1, 'Pam', 'Trexler', 'Hampton, Hampton and McQuill');

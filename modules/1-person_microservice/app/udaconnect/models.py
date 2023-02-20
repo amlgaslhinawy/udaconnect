@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from app import db  # noqa
-
 from sqlalchemy import Column, Integer, String
+
+from app import db  # noqa
 
 
 class Person(db.Model):
