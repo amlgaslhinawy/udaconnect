@@ -6,6 +6,5 @@ data:
   DB_HOST: "postgres"
   DB_PORT: "5432"
   PERSON_SERVICE_ENDPOINT: "http://person-svc-api:5000/"
-
 metadata:
   name: db-geoconnections-map
