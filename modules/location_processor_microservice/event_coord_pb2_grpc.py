@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import coordinates_event_pb2 as coordinates__event__pb2
+import event_coord_pb2 as event__coord__pb2
 
 
 class ItemServiceStub(object):
@@ -15,8 +15,8 @@ class ItemServiceStub(object):
         """
         self.Create = channel.unary_unary(
                 '/ItemService/Create',
-                request_serializer=coordinates__event__pb2.EventCoordinatesMessage.SerializeToString,
-                response_deserializer=coordinates__event__pb2.EventCoordinatesMessage.FromString,
+                request_serializer=event__coord__pb2.EventCoordinatesMessage.SerializeToString,
+                response_deserializer=event__coord__pb2.EventCoordinatesMessage.FromString,
                 )
 
 
@@ -34,8 +34,8 @@ def add_ItemServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
-                    request_deserializer=coordinates__event__pb2.EventCoordinatesMessage.FromString,
-                    response_serializer=coordinates__event__pb2.EventCoordinatesMessage.SerializeToString,
+                    request_deserializer=event__coord__pb2.EventCoordinatesMessage.FromString,
+                    response_serializer=event__coord__pb2.EventCoordinatesMessage.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -59,7 +59,7 @@ class ItemService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ItemService/Create',
-            coordinates__event__pb2.EventCoordinatesMessage.SerializeToString,
-            coordinates__event__pb2.EventCoordinatesMessage.FromString,
+            event__coord__pb2.EventCoordinatesMessage.SerializeToString,
+            event__coord__pb2.EventCoordinatesMessage.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
