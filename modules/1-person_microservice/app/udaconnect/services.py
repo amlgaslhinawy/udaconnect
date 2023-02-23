@@ -1,7 +1,5 @@
-#services 
 import logging
 from typing import Dict, List
-
 from app import db
 from app.udaconnect.models import Person
 

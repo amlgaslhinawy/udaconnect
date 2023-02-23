@@ -1,7 +1,5 @@
-from marshmallow import Schema, fields
-
 from app.udaconnect.models import Person
-
+from marshmallow import Schema, fields
 
 class PersonSchema(Schema):
     id = fields.Integer()
