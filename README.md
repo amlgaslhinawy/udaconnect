@@ -176,9 +176,13 @@ Wait until you have every pod running and access the http://localhost:30000/
 These pages should also load on your web browser:
 
 http://localhost:30002/ - OpenAPI Documentation
+
 http://localhost:30002/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+
 http://localhost:30001/api/persons - Base path for person microservice API
+
 http://localhost:30000/ - Frontend ReactJS Application
+
 To send records, please execute the python file for location-event-microservice grpc-client
 -------------------------------------------------------------------------------------------------------------
 Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster:
