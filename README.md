@@ -150,3 +150,53 @@ Your architecture diagram should focus on the services and how they talk to one 
 ## Tips
 * We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
 * The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
+-------------------------------------------------------------------------------------------------------------
+PERSON-MICROSERVICE
+Get into the 'person-microservice' folder and run $ kubectl apply -f deployment/
+When the pods are running, execute the script located in person-microservice/scripts/run_db_command.sh with the pod identifier sh /scripts/run_db_command.sh <POSTGRES_DB_POD_NAME> The step 2 will populate the postgres database (The pod name will be something like (postgres-person-xxxxxid-pod))
+Access the http://localhost:30001/api/persons for testing
+
+CONNECTION-MICROSERVICE
+Get into the 'connection-microservice' folder and run $ kubectl apply -f deployment/
+after you have the pods running, execute the script into person-microservice/scripts/run_db_command.sh with the pod identifier sh /connection-microservice/scripts/run_db_command.sh <POSTGRES_DB_POD_NAME>. (The pod name will be something like (postgres-geoconnections-xxxxxid-pod)) The step 2 will populate the postgres database
+Access the http://localhost:30002/api/persons/600/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5 for testing
+
+LOCATION-EVENT-MICROSERVICE
+Get into the 'location-event-microservice' folder and run `$ kubectl apply -f deployment/
+
+LOCATION-PROCESSOR-MICROSERVICE
+Get into the 'location-processor-microservice' folder and run `$ kubectl apply -f deployment/
+
+FRONTEND
+Get into the 'frontend' folder and run `$ kubectl apply -f deployment/
+Wait until you have every pod running and access the http://localhost:30000/ 
+
+-- Once the project is up and running, you should be able to send requests to grpc location-event-microservice kubectl get pods and kubectl get services should both return udaconnect-app, udaconnect-api, and postgres
+
+These pages should also load on your web browser:
+
+http://localhost:30002/ - OpenAPI Documentation
+http://localhost:30002/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+http://localhost:30001/api/persons - Base path for person microservice API
+http://localhost:30000/ - Frontend ReactJS Application
+To send records, please execute the python file for location-event-microservice grpc-client
+-------------------------------------------------------------------------------------------------------------
+Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster:
+
+    kafka-release.default.svc.cluster.local
+
+Each Kafka broker can be accessed by producers via port 9092 on the following DNS name(s) from within your cluster:
+
+    kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092
+
+To create a pod that you can use as a Kafka client run the following commands:
+
+    kubectl run kafka-release-client --restart='Never' --image docker.io/bitnami/kafka:2.6.0-debian-10-r106 --namespace default --command -- sleep infinity
+    kubectl exec --tty -i kafka-release-client --namespace default -- bash
+
+    PRODUCER:
+        kafka-console-producer.sh --broker-list kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092 --topic test
+
+    CONSUMER:
+        kafka-console-consumer.sh --bootstrap-server kafka-release.default.svc.cluster.local:9092 --topic test 
+        --from-beginning
